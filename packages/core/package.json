@@ -8,7 +8,8 @@
     "test": "hardhat test",
     "deploy": "hardhat deploy",
     "commit-hook": "npm run deploy && npm run test",
-    "deploy-local:contracts": "hardhat deploy --network localhost"
+    "deploy-local:contracts": "hardhat deploy --network localhost",
+    "wait-for-port": "echo 'Waiting for port' && wait-port 8545 && tsx wait.ts"
   },
   "devDependencies": {
     "tsconfig": "workspace:*",
