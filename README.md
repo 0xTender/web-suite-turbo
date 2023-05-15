@@ -31,3 +31,7 @@ Start dev
 ```
 pnpm run dev
 ```
+
+You can reset your local deployments with (destructive action):
+
+./reset.sh
