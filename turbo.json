@@ -3,6 +3,7 @@
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
     "build": {
+      "env": ["NODE_ENV", "PORT", "VERCEL_URL", "DATABASE_URL"],
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
