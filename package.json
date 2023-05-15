@@ -13,5 +13,8 @@
     "turbo": "^1.9.3"
   },
   "packageManager": "pnpm@7.15.0",
-  "name": "web-suite-turbo"
+  "name": "web-suite-turbo",
+  "dependencies": {
+    "typescript": "^5.0.4"
+  }
 }
