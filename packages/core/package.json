@@ -7,7 +7,8 @@
     "build": "tsc -p tsconfig.build.json --outDir dist",
     "test": "hardhat test",
     "deploy": "hardhat deploy",
-    "commit-hook": "npm run deploy && npm run test"
+    "commit-hook": "npm run deploy && npm run test",
+    "deploy-local:contracts": "hardhat deploy --network localhost"
   },
   "devDependencies": {
     "tsconfig": "workspace:*",
