@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Listener {
+  id            Int    @id @default(autoincrement())
+  function_name String @db.VarChar(255)
+}
+
+model ListenerError {
+  id Int @id @default(autoincrement())
+
+  function_name String @db.VarChar(255)
+  error         String @db.Text
+}
+
+model User {
+  id           Int    @id @default(autoincrement())
+  email        String
+  first_name   String @db.VarChar(255)
+  last_name    String @db.VarChar(255)
+  address      String @db.Text
+  phone_number String @db.VarChar(255)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  wallet_address String @unique
+
+  verified Boolean @default(false)
+}
+
+model Role {
+  id             Int    @id @default(autoincrement())
+  wallet_address String @unique
+
+  role String @db.VarChar(255)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Event_pm   Event_pm @relation(fields: [event_pmId], references: [id])
+  event_pmId String   @unique
+}
+
+model Contract_pm {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  address         String
+  chainId         Int
+  transactionHash String
+
+  abiPath String
+
+  initBlock        Int
+  indexedTillBlock Int
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Event_pm  Event_pm[]
+}
+
+model Event_pm {
+  id          String      @id
+  Contract_pm Contract_pm @relation(fields: [ContractId], references: [id])
+  ContractId  Int
+
+  block           Int
+  transactionHash String
+  logIndex        Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  E_AllowedStatesUpdated_ComplaintRegistry E_AllowedStatesUpdated_ComplaintRegistry[]
+
+  E_ComplaintStateUpdated_ComplaintRegistry E_ComplaintStateUpdated_ComplaintRegistry[]
+
+  E_OwnershipTransferred_ComplaintRegistry E_OwnershipTransferred_ComplaintRegistry[]
+
+  E_RoleUpdated_ComplaintRegistry E_RoleUpdated_ComplaintRegistry[]
+
+  E_UserProfileCreated_ComplaintRegistry E_UserProfileCreated_ComplaintRegistry[]
+
+  Role Role[]
+}
+
+model E_AllowedStatesUpdated_ComplaintRegistry {
+  id       Int      @id @default(autoincrement())
+  Event_pm Event_pm @relation(fields: [eventId], references: [id])
+  eventId  String   @unique
+
+  A_status String @db.VarChar(1000)
+
+  A_allowed_states String @db.VarChar(1000)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model E_ComplaintStateUpdated_ComplaintRegistry {
+  id       Int      @id @default(autoincrement())
+  Event_pm Event_pm @relation(fields: [eventId], references: [id])
+  eventId  String   @unique
+
+  A_complaint String @db.VarChar(1000)
+
+  A_complaint_id String @db.VarChar(1000)
+
+  A_updated_by String @db.VarChar(1000)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model E_OwnershipTransferred_ComplaintRegistry {
+  id       Int      @id @default(autoincrement())
+  Event_pm Event_pm @relation(fields: [eventId], references: [id])
+  eventId  String   @unique
+
+  A_previousOwner String @db.VarChar(1000)
+
+  A_newOwner String @db.VarChar(1000)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model E_RoleUpdated_ComplaintRegistry {
+  id       Int      @id @default(autoincrement())
+  Event_pm Event_pm @relation(fields: [eventId], references: [id])
+  eventId  String   @unique
+
+  A_user String @db.VarChar(1000)
+
+  A_role String @db.VarChar(1000)
+
+  A_is_active String @db.VarChar(1000)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model E_UserProfileCreated_ComplaintRegistry {
+  id       Int      @id @default(autoincrement())
+  Event_pm Event_pm @relation(fields: [eventId], references: [id])
+  eventId  String   @unique
+
+  A_user String @db.VarChar(1000)
+
+  A_profile String @db.VarChar(1000)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "ComplaintRegistry",
+    "path": "../../packages/core/deployments/localhost/ComplaintRegistry.json",
+    "rpc": "http://127.0.0.1:8545/"
+  }
+]
